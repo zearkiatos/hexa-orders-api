@@ -1,0 +1,24 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+      "baseUrl": "./",
+      "rootDir": "./",
+      "paths": {
+        "@Api/*": ["src/*"],
+        "@Config": ["./src/config/env"],
+        "@Config/*": ["./src/config/*"],
+        "@Utils/*": ["src/utils/*"],
+        "@Shared/*": ["./src/Contexts/Shared/*"],
+      }
+    },
+    "lib": ["es2021"],
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage"
+    ],
+    "include": [
+      "src",
+      "tests"
+    ]
+  }

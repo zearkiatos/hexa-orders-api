@@ -1,0 +1,6 @@
+config:
+  dependencies:
+    - name: WebServer
+      instance: '../Contexts/Server/infrastructure/ExpressAdapter'
+      args:
+        - 'PORT'
