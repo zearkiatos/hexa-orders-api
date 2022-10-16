@@ -1,11 +1,11 @@
-import { YamlUtils } from '@Utils/yamlUtils'
+import { YamlUtils } from "@Utils/yamlUtils";
 
 abstract class Dependency {
   static get(path) {
-    const dependencies = YamlUtils.parse(path)
+    const dependencies = YamlUtils.parse(path);
 
-    return dependencies
+    return dependencies;
   }
 }
 
-export { Dependency }
+export { Dependency };

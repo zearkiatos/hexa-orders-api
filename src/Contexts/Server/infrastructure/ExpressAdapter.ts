@@ -14,7 +14,7 @@ class ExpressAdapter implements Infrastructure {
   constructor(port: number) {
     this.port = port;
     this.express = Express();
-    this.express.use(Routes)
+    this.express.use(Routes);
   }
 
   start(): void | Promise<void> {

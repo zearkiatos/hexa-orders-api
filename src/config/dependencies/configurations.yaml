@@ -6,3 +6,5 @@ config:
         - 'PORT'
     - name: Health
       instance: '../Contexts/Health/application/health'
+    - name: NotFound
+      instance: '../Contexts/NotFound/application/notFound'

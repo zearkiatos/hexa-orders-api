@@ -10,24 +10,16 @@ const log = Logger(__filename);
 class Route {
   private service: Service;
 
-  constructor(@Inject("Health") service?: Service) {
+  constructor(@Inject("NotFound") service?: Service) {
     this.service = service;
   }
 
   action() {
     return async (_request: Request, response: Response) => {
       try {
-        const statusDTO = await this.service.run();
+        const data = await this.service.run();
 
-        const status = statusDTO
-          ? httpStatusCode.OK
-          : httpStatusCode.INTERNAL_SERVER_ERROR;
-
-        const data = {
-          uptime: process.uptime(),
-          message: "Ok",
-          date: new Date(),
-        };
+        const status = httpStatusCode.NOT_FOUND;
 
         response.status(status).send(data);
       } catch (error: any) {
