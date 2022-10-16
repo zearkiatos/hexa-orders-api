@@ -1,9 +1,9 @@
-import path from 'path'
-import config from './env/config'
-import { Dependency } from './dependencies'
+import path from 'path';
+import config from './env/config';
+import { Dependency } from './dependencies';
 
-const baseDir = path.resolve(__dirname)
+const baseDir = path.resolve(__dirname);
 
-const appConfigurations = Dependency.get(`${baseDir}/dependencies/configurations.yaml`)
+const appConfigurations = Dependency.get(`${baseDir}/dependencies/configurations.yaml`);
 
-export default { ...config, dependencies: appConfigurations.config.dependencies }
+export default { ...config, dependencies: appConfigurations.config.dependencies };

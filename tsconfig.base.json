@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es2021",
     "module": "commonjs",
     "outDir": "dist",
@@ -21,8 +22,9 @@
       "@Api/*": ["./src/*"],
       "@Config": ["./src/config/env"],
       "@Config/*": ["./src/config/*"],
-      "@Utils/*": ["src/utils/*"],
+      "@Utils/*": ["./src/utils/*"],
       "@Shared/*": ["./src/Contexts/Shared/*"],
+      "@Server/*": ["./src/Contexts/Server/*"],
     }
   }
 }

@@ -2,6 +2,7 @@ import { Server } from "http";
 import Express from "express";
 import { Logger } from "@Utils/logger";
 import Infrastructure from "@Shared/infrastructure/infrastructure";
+import Routes from '@Server/infrastructure/routes';
 
 const log = Logger(__filename);
 
@@ -13,6 +14,7 @@ class ExpressAdapter implements Infrastructure {
   constructor(port: number) {
     this.port = port;
     this.express = Express();
+    this.express.use(Routes)
   }
 
   start(): void | Promise<void> {

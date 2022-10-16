@@ -1,12 +1,12 @@
-import fs from 'fs'
-import YAML from 'yaml'
+import fs from 'fs';
+import YAML from 'yaml';
 abstract class YamlUtils {
   static parse(path): any {
-    const file: string = fs.readFileSync(path, 'utf8')
-    const jsonObject: any = YAML.parse(file)
+    const file: string = fs.readFileSync(path, 'utf8');
+    const jsonObject: any = YAML.parse(file);
 
-    return jsonObject
+    return jsonObject;
   }
 }
 
-export { YamlUtils }
+export { YamlUtils };

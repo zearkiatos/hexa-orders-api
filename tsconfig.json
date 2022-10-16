@@ -4,11 +4,12 @@
       "baseUrl": "./",
       "rootDir": "./",
       "paths": {
-        "@Api/*": ["src/*"],
+        "@Api/*": ["./src/*"],
         "@Config": ["./src/config/env"],
         "@Config/*": ["./src/config/*"],
-        "@Utils/*": ["src/utils/*"],
+        "@Utils/*": ["./src/utils/*"],
         "@Shared/*": ["./src/Contexts/Shared/*"],
+        "@Server/*": ["./src/Contexts/Server/*"],
       }
     },
     "lib": ["es2021"],
