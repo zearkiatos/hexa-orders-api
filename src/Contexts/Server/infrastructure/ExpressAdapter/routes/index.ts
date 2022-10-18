@@ -1,6 +1,6 @@
 import Express from "express";
-import HealthRouter from "@Api/Contexts/Server/infrastructure/routes/health";
-import NotFoundRouter from "@Api/Contexts/Server/infrastructure/routes/notFound";
+import HealthRouter from "@Api/Contexts/Server/infrastructure/ExpressAdapter/routes/health";
+import NotFoundRouter from "@Api/Contexts/Server/infrastructure/ExpressAdapter/routes/notFound";
 const router = Express.Router();
 
 const healthRouter = new HealthRouter();

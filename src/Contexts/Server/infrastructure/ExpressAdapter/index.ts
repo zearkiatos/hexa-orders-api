@@ -2,7 +2,7 @@ import { Server } from "http";
 import Express from "express";
 import { Logger } from "@Utils/logger";
 import Infrastructure from "@Shared/infrastructure/infrastructure";
-import Routes from '@Server/infrastructure/routes';
+import Routes from '@Server/infrastructure/ExpressAdapter/routes';
 
 const log = Logger(__filename);
 
