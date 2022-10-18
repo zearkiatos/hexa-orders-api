@@ -1,10 +1,12 @@
-const { pathsToModuleNameMapper } = require("ts-jest/utils");
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { pathsToModuleNameMapper } = require("ts-jest");
 const TSConfig = require("./tsconfig.spec.json");
 
 module.exports = {
   globals: {
     "ts-jest": {
-      tsconfig: "tsconfig.spec.json",
+      tsconfig: "./tsconfig.spec.json",
     },
   },
   name: "hexa-shopping-cart-orders-api",
@@ -16,10 +18,10 @@ module.exports = {
   collectCoverageFrom: ["src/**/*.ts", "!**/node_modules/**"],
   coverageThreshold: {
     global: {
-      statements: 50,
-      branches: 50,
-      lines: 50,
-      functions: 50,
+      statements: 63,
+      branches: 56,
+      lines: 62,
+      functions: 70,
     },
   },
   moduleDirectories: ["node_modules", "src", "tests"],
