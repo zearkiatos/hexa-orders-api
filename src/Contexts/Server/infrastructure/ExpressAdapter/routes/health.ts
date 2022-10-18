@@ -3,6 +3,7 @@ import httpStatusCode from "http-status-codes";
 import Service from "@Api/Contexts/Shared/application/Service";
 import { Logger } from "@Utils/logger";
 import { Injection, Inject } from "@Utils/dependencyInjection";
+import Config from "@Config/env/config";
 
 const log = Logger(__filename);
 
@@ -27,6 +28,7 @@ class Route {
           uptime: process.uptime(),
           message: "Ok",
           date: new Date(),
+          environment: Config.ENVIRONMENT,
         };
 
         response.status(status).send(data);
