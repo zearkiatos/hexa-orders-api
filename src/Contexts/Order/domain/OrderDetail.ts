@@ -1,6 +1,6 @@
 import Item from "@Order/domain/Item";
 class OrderDetail {
-    id:string;
+    id?:string;
     item: Item;
     quantity:number;
     subTotal:number;

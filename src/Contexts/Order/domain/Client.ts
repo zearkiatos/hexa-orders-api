@@ -1,5 +1,5 @@
 class Client {
-    id:string;
+    id?:string;
     username?:string;
     name:string;
     lastname:string;

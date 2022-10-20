@@ -11,7 +11,7 @@
         "@Shared/*": ["./src/Contexts/Shared/*"],
         "@Server/*": ["./src/Contexts/Server/*"],
         "@Order/*": ["./src/Contexts/Order/*"],
-        "@Database": ["./src/Contexts/Database"],
+        "@Database/*": ["./src/Contexts/Database/*"],
         "@Builders/*": ["./tests/builders/*"],
       }
     },
