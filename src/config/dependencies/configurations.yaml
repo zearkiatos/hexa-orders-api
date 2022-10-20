@@ -8,3 +8,9 @@ config:
       instance: '../Contexts/Health/application/health'
     - name: NotFound
       instance: '../Contexts/NotFound/application/notFound'
+    - name: OrderRepository
+      instance: '../Contexts/Order/infrastructure/Mock/MockOrderRepository'
+    - name: Order
+      instance: '../Contexts/Order/application/order'
+    - name: Database
+      instance: '../Contexts/Database/infrastructure/MockDatabase'
