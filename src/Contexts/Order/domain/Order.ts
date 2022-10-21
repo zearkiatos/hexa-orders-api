@@ -5,7 +5,7 @@ class Order {
     id?:string;
     orderNumber:string;
     client:Client;
-    OrderDetail:OrderDetail[];
+    orderDetail:OrderDetail[];
     total:number;
 }
 

@@ -4,15 +4,15 @@ import OrderModel from "@Order/domain/Order";
 import OrderRepository from "@Order/infrastructure/OrderRepository";
 
 @Injection()
-class PostOrder implements Service {
+class PutOrder implements Service {
   private orderRepository: OrderRepository;
 
   constructor(@Inject("OrderRepository") orderRepository: OrderRepository) {
     this.orderRepository = orderRepository;
   }
-  async run(order:OrderModel): Promise<void> {
-    await this.orderRepository.save(order);
+  async run(order: OrderModel): Promise<void> {
+    await this.orderRepository.update(order.id, order);
   }
 }
 
-export default PostOrder;
+export default PutOrder;

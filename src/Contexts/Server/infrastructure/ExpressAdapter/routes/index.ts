@@ -15,6 +15,12 @@ router.get("/orders", orderRouter.get());
 router.post("/orders", jsonParser, (request, response) =>
   orderRouter.post(request, response)
 );
+router.put("/orders/:id", jsonParser, (request, response) =>
+  orderRouter.put(request, response)
+);
+router.delete("/orders/:id", jsonParser, (request, response) =>
+  orderRouter.delete(request, response)
+);
 router.get("*", notFoundRouter.action());
 
 export default router;
