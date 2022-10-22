@@ -12,7 +12,8 @@
         "@Server/*": ["./src/Contexts/Server/*"],
         "@Order/*": ["./src/Contexts/Order/*"],
         "@Database/*": ["./src/Contexts/Database/*"],
-        "@Builders/*": ["./tests/builders/*"]
+        "@Builders/*": ["./tests/builders/*"],
+        "@Mocks/*": ["./tests/__mocks__/*"]
       }
     },
     "exclude": [

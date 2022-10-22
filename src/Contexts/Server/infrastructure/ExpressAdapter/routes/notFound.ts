@@ -23,7 +23,7 @@ class Route {
 
         response.status(status).send(data);
       } catch (error: any) {
-        log.error("Error in Health Route", {
+        log.error("Error in Not Found Route", {
           errorMessage: error.message,
           stack: error.stack,
         });

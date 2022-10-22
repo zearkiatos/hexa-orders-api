@@ -21,6 +21,9 @@ router.put("/orders/:id", jsonParser, (request, response) =>
 router.delete("/orders/:id", jsonParser, (request, response) =>
   orderRouter.delete(request, response)
 );
+router.get("/orders/:orderNumber", jsonParser, (request, response) =>
+  orderRouter.getByOrderNumber(request, response)
+);
 router.get("*", notFoundRouter.action());
 
 export default router;
