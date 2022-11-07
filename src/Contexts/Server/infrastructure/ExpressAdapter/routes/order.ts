@@ -50,9 +50,8 @@ class Route {
 
       const order: OrderModel = request.body as OrderModel;
 
-      await (service[1] as PostOrder).run(order);
 
-      console.log(order);
+      await (service[1] as PostOrder).run(order);
 
       const data = {
         message: "Save successfully",
@@ -138,6 +137,8 @@ class Route {
       const order = await (service[4] as GetByOrderNumber).run(orderNumber);
 
       const data = order;
+
+      console.log(data);
 
       if (data) {
         response.status(httpStatusCode.OK).send(data);

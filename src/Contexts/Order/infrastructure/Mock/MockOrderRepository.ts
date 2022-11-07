@@ -4,7 +4,7 @@ import MockOrderDTO from "@Order/infrastructure/Mock/DTO";
 import keys from "@Utils/keys";
 
 const orders = [];
-class MockOrderRopository implements OrderRepository {
+class MockOrderRepository implements OrderRepository {
   find(): Promise<Order[]> {
     return Promise.resolve(MockOrderDTO.ordersMapper(orders));
   }
@@ -34,15 +34,15 @@ class MockOrderRopository implements OrderRepository {
 
   findByOrderNumber(orderNumber: string): Promise<Order> {
     const order: Order = orders.find(
-      (order) => (order as Order).orderNumber == orderNumber
+      (order) => (order as Order)?.orderNumber == orderNumber
     );
 
     if (order) {
       return Promise.resolve(order);
     }
 
-    return null;
+    return Promise.resolve(null);
   }
 }
 
-export default MockOrderRopository;
+export default MockOrderRepository;
