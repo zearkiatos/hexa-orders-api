@@ -8,6 +8,7 @@ import GetOrders from "@Api/Contexts/Order/application/order/GetOrders";
 import PostOrder from "@Api/Contexts/Order/application/order/PostOrder";
 import PutOrder from "@Api/Contexts/Order/application/order/PutOrder";
 import DeleteOrder from "@Api/Contexts/Order/application/order/DeleteOrder";
+import GetByOrderNumber from "@Api/Contexts/Order/application/order/GetByOrderNumber";
 
 const log = Logger(__filename);
 
@@ -49,10 +50,12 @@ class Route {
 
       const order: OrderModel = request.body as OrderModel;
 
+
       await (service[1] as PostOrder).run(order);
 
       const data = {
         message: "Save successfully",
+        id: order.id,
       };
 
       response.status(httpStatusCode.OK).send(data);
@@ -112,6 +115,36 @@ class Route {
       };
 
       response.status(httpStatusCode.OK).send(data);
+    } catch (error: any) {
+      log.error("Error in Order Route", {
+        errorMessage: error.message,
+        stack: error.stack,
+      });
+      const status = httpStatusCode.INTERNAL_SERVER_ERROR;
+      const data = {
+        message: "Error",
+      };
+      response.status(status).send(data);
+    }
+  }
+
+  async getByOrderNumber(request: Request, response: Response) {
+    try {
+      const service: any[] = await this.service.run();
+
+      const { orderNumber } = request.params;
+
+      const order = await (service[4] as GetByOrderNumber).run(orderNumber);
+
+      const data = order;
+
+      console.log(data);
+
+      if (data) {
+        response.status(httpStatusCode.OK).send(data);
+      } else {
+        response.status(httpStatusCode.NOT_FOUND).send({});
+      }
     } catch (error: any) {
       log.error("Error in Order Route", {
         errorMessage: error.message,

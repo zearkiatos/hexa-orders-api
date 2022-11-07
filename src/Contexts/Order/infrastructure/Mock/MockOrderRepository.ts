@@ -4,7 +4,7 @@ import MockOrderDTO from "@Order/infrastructure/Mock/DTO";
 import keys from "@Utils/keys";
 
 const orders = [];
-class MockOrderRopository implements OrderRepository {
+class MockOrderRepository implements OrderRepository {
   find(): Promise<Order[]> {
     return Promise.resolve(MockOrderDTO.ordersMapper(orders));
   }
@@ -23,7 +23,7 @@ class MockOrderRopository implements OrderRepository {
       ...orders[orderIndex],
       orderNumber: order.orderNumber,
       client: order.client,
-      orderDetail: order.orderDetail,
+      orderDetails: order.orderDetails,
       total: order.total,
     };
   }
@@ -31,9 +31,18 @@ class MockOrderRopository implements OrderRepository {
     const orderIndex = orders.findIndex((order) => (order as Order).id == id);
     delete orders[orderIndex];
   }
-  findByOrderNumber(_orderNumber: string): Promise<Order> {
-    throw new Error("Method not implemented.");
+
+  findByOrderNumber(orderNumber: string): Promise<Order> {
+    const order: Order = orders.find(
+      (order) => (order as Order)?.orderNumber == orderNumber
+    );
+
+    if (order) {
+      return Promise.resolve(order);
+    }
+
+    return Promise.resolve(null);
   }
 }
 
-export default MockOrderRopository;
+export default MockOrderRepository;

@@ -5,6 +5,7 @@ import GetOrders from "@Order/application/order/GetOrders";
 import PostOrder from "@Order/application/order/PostOrder";
 import PutOrder from "@Order/application/order/PutOrder";
 import DeleteOrder from "@Order/application/order/DeleteOrder";
+import GetByOrderNumber from "@Order/application/order/GetByOrderNumber";
 
 @Injection()
 class Order implements Service {
@@ -19,6 +20,7 @@ class Order implements Service {
       new PostOrder(this.orderRepository),
       new PutOrder(this.orderRepository),
       new DeleteOrder(this.orderRepository),
+      new GetByOrderNumber(this.orderRepository),
     ];
   }
 }
