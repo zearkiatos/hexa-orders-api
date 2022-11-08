@@ -9,7 +9,7 @@ class RepositoryErrorHandler extends Error {
   }
 
   getErrorMessage() {
-    return `Something was wrong with the queue: ${this.message}`;
+    return `Something was wrong with the repository: ${this.message}`;
   }
 }
 
