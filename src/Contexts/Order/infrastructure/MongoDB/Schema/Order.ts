@@ -1,21 +1,47 @@
 import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
 
-const Clients = new Schema();
+const Client:mongoose.Schema = new mongoose.Schema({
+  username: {
+    unique: true,
+    type: String,
+  },
+  name: String,
+  lastname: String,
+  idNumber: {
+    unique: true,
+    type: String,
+  },
+});
+
+const Items:mongoose.Schema = new mongoose.Schema({
+  sku: String,
+  barcode: {
+    type: String,
+    unique: true
+  },
+  itemNumber: {
+    type: String,
+    unique: true
+  },
+  price: Number
+});
+
+const OrderDetails:mongoose.Schema = new mongoose.Schema({
+  item: Items,
+  quantity: Number,
+  subTotal: Number
+});
 
 const Orders = mongoose.model(
   "Order",
-  new Schema({
+  new mongoose.Schema({
     orderNumber: {
-        unique: true,
-        type: String
+      unique: true,
+      type: String,
     },
-    mealId: {
-      type: Schema.Types.ObjectId,
-      ref: "Meal",
-    },
-    userId: String,
+    client: Client,
+    orderDetails: [OrderDetails]
   })
 );
 

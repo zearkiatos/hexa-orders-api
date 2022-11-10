@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import { connect, disconnect } from "mongoose";
 import Database from "@Database/infrastructure/Database";
 import config from "@Config/index";
 import DatabaseErrorHandler from "@Api/Errors/DatabaseErrorHandler";
@@ -8,7 +8,7 @@ const log = Logger(__filename);
 class MongoDatabase implements Database {
   connection(): Promise<boolean> {
     try {
-      mongoose.connect(config.MONGO_DATABASE_URI);
+      connect(config.MONGO_DATABASE_URI);
       log.info("Connection to the database 🍃 🟢");
       return Promise.resolve(true);
     } catch (ex: any) {
@@ -20,7 +20,7 @@ class MongoDatabase implements Database {
   }
   close(): Promise<boolean> {
     try {
-      mongoose.disconnect();
+      disconnect();
       log.info("Close the database success 🔒");
       return Promise.resolve(true);
     } catch (ex: any) {
