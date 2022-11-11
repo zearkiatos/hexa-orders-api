@@ -4,7 +4,6 @@
     "target": "es2021",
     "module": "commonjs",
     "outDir": "dist",
-    "importHelpers": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,

@@ -8,10 +8,12 @@ const api = new Api();
 describe("Test suite for express adapter", () => {
   beforeAll(async () => {
     await api.start();
+    
   });
 
   afterAll(async () => {
     await api.stop();
+    
   });
   test("Should get status 200 when call health", async () => {
     const response = await supertest(`http://localhost:${config.PORT}`).get(
@@ -19,5 +21,6 @@ describe("Test suite for express adapter", () => {
     );
 
     expect(response.status).toBe(httpStatus.OK);
+    
   });
 });

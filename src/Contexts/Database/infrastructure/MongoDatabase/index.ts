@@ -6,9 +6,11 @@ import { Logger } from "@Api/utils/logger";
 const log = Logger(__filename);
 
 class MongoDatabase implements Database {
-  public async connection(){
+  public async connection() {
     try {
-      await mongoose.connect(config.MONGO_DATABASE_URI);
+      await mongoose.connect(config.MONGO_DATABASE_URI, {
+        useNewUrlParser: true,
+      });
       log.info("Connection to the database 🍃 🟢");
     } catch (ex: any) {
       log.error("Error in the connection", {

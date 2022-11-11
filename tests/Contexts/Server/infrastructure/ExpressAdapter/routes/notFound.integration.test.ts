@@ -9,10 +9,12 @@ const api = new Api();
 describe("Test suite for express adapter", () => {
   beforeAll(async () => {
     await api.start();
+    
   });
 
   afterAll(async () => {
     await api.stop();
+    
   });
   test("Should get status 200 when call health", async () => {
     const notFoundMock = new NotFoundBuilder().build();
@@ -22,5 +24,6 @@ describe("Test suite for express adapter", () => {
 
     expect(response.status).toBe(httpStatus.NOT_FOUND);
     expect(response.body).toEqual(notFoundMock);
+    
   });
 });

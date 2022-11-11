@@ -11,7 +11,9 @@
     "build:start": "npm run build && npm run start",
     "eslint": "eslint src/**/*.ts",
     "eslint:fix": "eslint src/**/*.ts --fix",
-    "test": "make test-env-up && jest --coverage --config jest.config.js --runInBand --forceExit --detectOpenHandles && make test-env-down"
+    "pretest": "make test-env-up",
+    "test": "jest --config jest.config.js --coverage --forceExit --detectOpenHandles",
+    "postest": "make test-env-down"
   },
   "repository": {
     "type": "git",
