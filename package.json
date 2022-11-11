@@ -13,6 +13,7 @@
     "eslint:fix": "eslint src/**/*.ts --fix",
     "pretest": "make test-env-up",
     "test": "jest --config jest.config.js --coverage --forceExit --detectOpenHandles",
+    "test:ci": "CI=false npm run test",
     "postest": "make test-env-down"
   },
   "repository": {
