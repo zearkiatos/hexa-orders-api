@@ -11,7 +11,7 @@ module.exports = {
   },
   verbose: true,
   preset: "ts-jest",
-  roots: ["<rootDir>/src", "<rootDir>/tests"],
+  roots: ["src", "tests"],
   testEnvironment: "node",
   testRegex: "((\\.|/*.)(test))\\.ts?$",
   setupFiles: ["./tests/jest.setup.ts"],
