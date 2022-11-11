@@ -15,6 +15,7 @@ class MongoDatabase implements Database {
     } catch (ex: any) {
       log.error("Error in the connection", {
         errorMessage: ex.message,
+        stack: ex.stack
       });
       throw new DatabaseErrorHandler(ex.message);
     }
@@ -26,6 +27,7 @@ class MongoDatabase implements Database {
     } catch (ex: any) {
       log.error("Error when try to disconnect the database", {
         errorMessage: ex.message,
+        stack: ex.stack
       });
       throw new DatabaseErrorHandler(ex.message);
     }
