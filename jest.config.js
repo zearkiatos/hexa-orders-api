@@ -3,8 +3,6 @@
 const { pathsToModuleNameMapper } = require("ts-jest");
 const TSConfig = require("./tsconfig.spec.json");
 
-const esModules = ['mongodb'].join('|');
-
 module.exports = {
   globals: {
     "ts-jest": {
@@ -29,5 +27,5 @@ module.exports = {
   moduleDirectories: ["node_modules", "src", "tests"],
   moduleNameMapper: pathsToModuleNameMapper(TSConfig.compilerOptions.paths, {
     prefix: "<rootDir>/",
-  })
+  }),
 };

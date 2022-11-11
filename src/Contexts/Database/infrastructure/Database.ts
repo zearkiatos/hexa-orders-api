@@ -1,7 +1,7 @@
 interface Database {
-  connection(): Promise<boolean>;
+  connection(): Promise<boolean | void>;
 
-  close(): Promise<boolean>;
+  close(): Promise<boolean | void>;
 
   getDatabaseContext():any;
 }

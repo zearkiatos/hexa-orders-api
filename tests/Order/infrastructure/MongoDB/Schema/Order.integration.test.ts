@@ -1,19 +1,26 @@
-import mongoose from "mongoose";
-import Order from "@Order/infrastructure/MongoDB/Schema/Order";
-import config from "@Config/index";
+import MongoDatabase from "@Api/Contexts/Database/infrastructure/MongoDatabase";
+import OrderBuilder from "@Builders/orderBuilder";
+import Order from '@Order/infrastructure/MongoDB/Schema/Order';
+
+const mongoDatabase = new MongoDatabase();
+
 describe("Suite Integration test for Order mongo Schema", () => {
   beforeAll(async () => {
-      console.log(config.MONGO_DATABASE_URI);
-      await mongoose.connect(config.MONGO_DATABASE_URI);
+      await mongoDatabase.connection();
+      await Order.deleteMany({});
+      
   });
 
   afterAll(async () => {
-    // await mongoose.disconnect();
-    // done();
+    await Order.deleteMany({});
+    await mongoDatabase.close();
   });
-  test("Should persist the order into the database", (done) => {
-    // const orders = Order.find();
-    // console.log(orders);
-    done();
+  test("Should persist the order into the database", async () => {
+    const order = new OrderBuilder().build();
+
+    await Order.create(order);
+    const orderResult:any = await Order.findOne({ orderNumber: order.orderNumber });
+    
+    expect(order.orderNumber).toBe(orderResult.orderNumber);
   });
 });

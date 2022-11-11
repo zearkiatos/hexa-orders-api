@@ -17,7 +17,7 @@ class OrderBuilder extends BaseBuilder {
     this.client = new ClientBuilder().build() as Client;
     this.orderDetails = [new OrderDetailBuilder().build() as OrderDetail];
     this.total = this.orderDetails.reduce(
-      (previousValue, { subTotal }) => previousValue + subTotal,
+      (previousValue, { subtotal }) => previousValue + subtotal,
       0
     );
   }
