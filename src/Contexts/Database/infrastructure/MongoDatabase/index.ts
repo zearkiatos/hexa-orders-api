@@ -10,6 +10,7 @@ class MongoDatabase implements Database {
     try {
       await mongoose.connect(config.MONGO_DATABASE_URI, {
         useNewUrlParser: true,
+        useUnifiedTopology: true
       });
       log.info("Connection to the database 🍃 🟢");
     } catch (ex: any) {

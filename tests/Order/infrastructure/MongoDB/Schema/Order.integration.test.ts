@@ -7,12 +7,14 @@ const mongoDatabase = new MongoDatabase();
 describe("Suite Integration test for Order mongo Schema", () => {
   beforeAll(async () => {
     await mongoDatabase.connection();
-    await Order.deleteMany({});
-    
+    await Order.deleteMany();
+  });
+
+  afterEach(async () => {
+    await Order.deleteMany();
   });
 
   afterAll(async () => {
-    await Order.deleteMany({});
     await mongoDatabase.close();
     
   });
