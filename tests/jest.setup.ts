@@ -2,4 +2,4 @@ import { config } from "dotenv";
 
 config({ path: ".env.test" });
 
-jest.setTimeout(100000);
+jest.setTimeout(30000);
