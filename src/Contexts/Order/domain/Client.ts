@@ -3,7 +3,7 @@ class Client {
     username?:string;
     name:string;
     lastname:string;
-    idnumber:string;
+    idNumber:string;
 }
 
 export default Client;

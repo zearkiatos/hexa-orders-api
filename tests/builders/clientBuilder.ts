@@ -5,14 +5,14 @@ class ClientBuilder extends BaseBuilder {
   private username: string;
   private name: string;
   private lastname: string;
-  private idnumber: string;
+  private idNumber: string;
   constructor() {
     super();
     this.id = "1";
     this.username = "caprilespe";
     this.name = "Pedro";
     this.lastname = "Capriles";
-    this.idnumber = "1111111111";
+    this.idNumber = "1111111111";
   }
 }
 
