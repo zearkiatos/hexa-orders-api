@@ -3,7 +3,7 @@ class OrderDetail {
     id?:string;
     item: Item;
     quantity:number;
-    subTotal:number;
+    subtotal:number;
 }
 
 export default OrderDetail;

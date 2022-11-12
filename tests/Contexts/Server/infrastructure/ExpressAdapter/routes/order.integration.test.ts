@@ -4,10 +4,7 @@ import Api from "@Api/Api";
 import config from "@Config/env/config";
 import OrderBuilder from "@Builders/orderBuilder";
 import ClientBuilder from "@Builders/clientBuilder";
-import MockOrderRepository from "@Api/Contexts/Order/infrastructure/Mock/MockOrderRepository";
-// import OrderRepositoryMocked from "@Mocks/MockOrderRepositoryMock";
 import keys from "@Utils/keys";
-// jest.mock("@Api/Contexts/Order/infrastructure/Mock/MockOrderRepository");
 
 const api = new Api();
 
@@ -23,6 +20,7 @@ describe("Test suite for express adapter for orders", () => {
   afterAll(async () => {
     await api.stop();
     jest.clearAllMocks();
+    
   });
   test("Should get status 200 and get a order list", async () => {
     const response = await supertest(`http://localhost:${config.PORT}`).get(
@@ -30,6 +28,7 @@ describe("Test suite for express adapter for orders", () => {
     );
 
     expect(response.status).toBe(httpStatus.OK);
+    
   });
 
   test("Should get status save a new order", async () => {
@@ -45,6 +44,7 @@ describe("Test suite for express adapter for orders", () => {
 
     expect(responseGet.status).toBe(httpStatus.OK);
     expect(responseGet.body.id).toBe("1000");
+    
   });
 
   test("Should update a existed order", async () => {
@@ -75,6 +75,7 @@ describe("Test suite for express adapter for orders", () => {
     expect(response.status).toBe(httpStatus.OK);
     expect(responseGet.body.id).toBe("1002");
     expect(responseGet.body.client.name).toBe("Jose");
+    
   });
 
   test("Should delete an order existed", async () => {
@@ -96,5 +97,6 @@ describe("Test suite for express adapter for orders", () => {
     expect(response.status).toBe(httpStatus.OK);
     expect(response.body.message).toBe(messageExpected);
     expect(responseGet.status).toBe(httpStatus.NOT_FOUND);
+    
   });
 });

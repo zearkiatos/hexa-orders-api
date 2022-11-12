@@ -138,8 +138,6 @@ class Route {
 
       const data = order;
 
-      console.log(data);
-
       if (data) {
         response.status(httpStatusCode.OK).send(data);
       } else {

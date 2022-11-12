@@ -1,6 +1,19 @@
 {
-    "plugins": [
-      ["module-resolver", {
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
         "root": ["./dist"],
         "alias": {
           "@Api": "./dist/",
@@ -11,6 +24,7 @@
           "@Order": ["./dist/Contexts/Order"],
           "@Database": ["./dist/Contexts/Database"]
         }
-      }]
+      }
     ]
-  }
+  ]
+}

@@ -9,7 +9,7 @@ jobs:
       name: staging
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [18.x]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -42,9 +42,9 @@ jobs:
         NAME: ${{ secrets.NAME }}
     - name: Run test 🧪
       run: | 
-        npm run test
+        npm run test:ci
     - name: Run eslint 🧹🧐
       run: | 
         npm run eslint
     - name: Build docker 🐳
-      run: docker build . -t=hexa-shopping-cart-orders-api:ghb-$GITHUB_RUN_NUMBER
+      run: docker build . -t=hexa-shopping-cart-orders-api:github-$GITHUB_RUN_NUMBER

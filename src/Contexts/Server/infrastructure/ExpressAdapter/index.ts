@@ -17,18 +17,18 @@ class ExpressAdapter implements Infrastructure {
     this.express.use(Routes);
   }
 
-  start(): void | Promise<void> {
+  public start(): void | Promise<void> {
     this.http = this.express.listen(this.port, () => {
       log.info(`Server started 🚀 on port: ${this.port} 🟢 `);
     });
   }
-  stop(): void | Promise<void> {
+  public stop(): void | Promise<void> {
     if (this.http) {
       this.http.close((error) => {
         if (error) {
           log.error(`Something wrong to close web Server: ${error}`);
         }
-        log.info(`Server was stoped on port:${this.port}`);
+        log.info(`Server was stopped on port:${this.port}`);
       });
     } else {
       log.info(`Server not found, is already stoped`);

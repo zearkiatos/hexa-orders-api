@@ -3,6 +3,9 @@
     "compilerOptions": {
       "baseUrl": "./",
       "rootDir": "./",
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "target": "ES6",
       "paths": {
         "@Api/*": ["./src/*"],
         "@Config": ["./src/config/env"],
@@ -22,7 +25,7 @@
       "coverage"
     ],
     "include": [
-      "src",
-      "tests"
+      "src/**/*",
+      "tests/**/*"
     ]
 }
