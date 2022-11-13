@@ -16,7 +16,6 @@ describe("Suite Integration test for Order mongo Schema", () => {
 
   afterAll(async () => {
     await mongoDatabase.close();
-    
   });
   test("Should persist the order into the database", async () => {
     const order = new OrderBuilder().build();
@@ -27,6 +26,5 @@ describe("Suite Integration test for Order mongo Schema", () => {
     });
 
     expect(order.orderNumber).toBe(orderResult.orderNumber);
-    
   });
 });

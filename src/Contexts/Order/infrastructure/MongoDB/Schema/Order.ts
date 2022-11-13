@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 
-
-const Client:mongoose.Schema = new mongoose.Schema({
+const Client: mongoose.Schema = new mongoose.Schema({
   username: {
+    unique: true,
+    type: String,
+  },
+  id: {
     unique: true,
     type: String,
   },
@@ -14,34 +17,47 @@ const Client:mongoose.Schema = new mongoose.Schema({
   },
 });
 
-const Items:mongoose.Schema = new mongoose.Schema({
+const Items: mongoose.Schema = new mongoose.Schema({
+  id: {
+    unique: true,
+    type: String,
+  },
   sku: String,
   barcode: {
     type: String,
-    unique: true
+    unique: true,
   },
   itemNumber: {
     type: String,
-    unique: true
+    unique: true,
   },
-  price: Number
+  price: Number,
 });
 
-const OrderDetails:mongoose.Schema = new mongoose.Schema({
+const OrderDetails: mongoose.Schema = new mongoose.Schema({
+  id: {
+    unique: true,
+    type: String,
+  },
   item: Items,
   quantity: Number,
-  subTotal: Number
+  subtotal: Number,
 });
 
 const Orders = mongoose.model(
   "Order",
   new mongoose.Schema({
+    id: {
+      unique: true,
+      type: String,
+    },
     orderNumber: {
       unique: true,
       type: String,
     },
     client: Client,
-    orderDetails: [OrderDetails]
+    orderDetails: [OrderDetails],
+    total: Number,
   })
 );
 
