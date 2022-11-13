@@ -16,6 +16,7 @@ describe("Suite integration test for MongoOrderRepository", () => {
 
   beforeEach(async () => {
     await OrderModel.deleteMany({});
+    jest.restoreAllMocks();
   });
 
   afterAll(async () => {
@@ -80,6 +81,36 @@ describe("Suite integration test for MongoOrderRepository", () => {
     } catch (ex: any) {
       expect(ex.message).toBe(
         "Something was wrong in Mongo Order Repository when save an order: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
+
+  test("Should update an order an existed into the mongo database", async () => {
+    const order = new OrderBuilder().build();
+    await OrderModel.create(order);
+    order.orderNumber = "2";
+
+    await mongoOrderRepository.update(order.id, order);
+    const orderFound: any = await (
+      await OrderModel.findOne({ id: order.id })
+    ).toObject();
+
+    expect(orderFound).toBeDefined();
+    expect(orderFound.orderNumber).toBe("2");
+  });
+
+  test("Should try to update and MongoOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    jest.spyOn(OrderModel, "updateOne").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mongoOrderRepository.update(order.id, order);
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in Mongo Order Repository when try to update: message Something was wrong 🤯"
       );
       expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
     }

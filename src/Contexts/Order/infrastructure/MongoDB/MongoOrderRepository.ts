@@ -13,10 +13,13 @@ class MongoOrderRepository implements OrderRepository {
       const orders = await OrderModel.find();
       return MongoOrderDTO.ordersMapper(orders);
     } catch (ex: any) {
-      log.error("Something was wrong in Mongo Order Repository when try to find the order list", {
-        errorMessage: ex.message,
-        stack: ex.stack,
-      });
+      log.error(
+        "Something was wrong in Mongo Order Repository when try to find the order list",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
       throw new RepositoryErrorHandler(
         `Something was wrong in Mongo Order Repository when try to find the order list: message ${ex.message}`
       );
@@ -26,18 +29,38 @@ class MongoOrderRepository implements OrderRepository {
     try {
       await OrderModel.create(order);
     } catch (ex: any) {
-      log.error("Something was wrong in Mongo Order Repository when save an order", {
-        errorMessage: ex.message,
-        stack: ex.stack,
-      });
+      log.error(
+        "Something was wrong in Mongo Order Repository when save an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
       throw new RepositoryErrorHandler(
         `Something was wrong in Mongo Order Repository when save an order: message ${ex.message}`
       );
     }
   }
-  update(id: string, order: Order): void {
-    console.log(id + order);
-    throw new Error("Method not implemented.");
+  public async update(id: string, order: Order): Promise<void> {
+    try {
+      await OrderModel.updateOne(
+        { id },
+        {
+          $set: order,
+        }
+      );
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in Mongo Order Repository when try to update",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in Mongo Order Repository when try to update: message ${ex.message}`
+      );
+    }
   }
   delete(id: string): void {
     console.log(id);
