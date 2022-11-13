@@ -115,4 +115,62 @@ describe("Suite integration test for MongoOrderRepository", () => {
       expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
     }
   });
+
+  test("Should delete an order for delete into the mongo database", async () => {
+    const order = new OrderBuilder().build();
+    await OrderModel.create(order);
+
+    await mongoOrderRepository.delete(order.id);
+    const orders: any = await await OrderModel.find();
+
+    expect(orders).toBeDefined();
+    expect(orders).toHaveLength(0);
+  });
+
+  test("Should try to delete and MongoOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    jest.spyOn(OrderModel, "deleteOne").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mongoOrderRepository.delete(order.id);
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in Mongo Order Repository when try to delete: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
+
+  test("Should get a order by orderNumber into the mongo database", async () => {
+    const order = new OrderBuilder().build();
+    await OrderModel.create(order);
+
+    const orderFound: any = await mongoOrderRepository.findByOrderNumber(
+      order.orderNumber
+    );
+
+    expect(orderFound).toBeDefined();
+    expect(orderFound.id).toEqual(order.id);
+    expect(orderFound.client.name).toEqual(order.client.name);
+    expect(orderFound.orderDetails[0].id).toEqual(order.orderDetails[0].id);
+    expect(orderFound.orderNumber).toEqual(order.orderNumber);
+  });
+
+  test("Should try to find an orderby orderNumber and MongoOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    jest.spyOn(OrderModel, "findOne").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mongoOrderRepository.findByOrderNumber(order.id);
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in Mongo Order Repository when try to find an order: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
 });

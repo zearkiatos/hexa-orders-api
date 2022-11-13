@@ -62,13 +62,38 @@ class MongoOrderRepository implements OrderRepository {
       );
     }
   }
-  delete(id: string): void {
-    console.log(id);
-    throw new Error("Method not implemented.");
+  public async delete(id: string): Promise<void> {
+    try {
+      await OrderModel.deleteOne({ id });
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in Mongo Order Repository when try to delete",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in Mongo Order Repository when try to delete: message ${ex.message}`
+      );
+    }
   }
-  findByOrderNumber(orderNumber: string): Promise<Order> {
-    console.log(orderNumber);
-    throw new Error("Method not implemented.");
+  public async findByOrderNumber(orderNumber: string): Promise<Order> {
+    try {
+      const order = await OrderModel.findOne({ orderNumber });
+      return MongoOrderDTO.orderMapper(order);
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in Mongo Order Repository when try to find an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in Mongo Order Repository when try to find an order: message ${ex.message}`
+      );
+    }
   }
 }
 
