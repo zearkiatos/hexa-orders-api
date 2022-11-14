@@ -2,6 +2,7 @@
 This is a microservice in TypeScript 🟦 for practice and understand hexagonal architecture ⬣, domain driven design, the best practice of software development in TypeScript. This project simulate a orders microservice to managment orders from an ecommerce 🛒
 
 ![Github](https://github.com/zearkiatos/hexa-shopping-cart-orders-api/actions/workflows/action.yml/badge.svg)
+![GitlabCI](https://gitlab.com/caprilespe/hexa-shopping-cart-orders-api/badges/develop/pipeline.svg)
 
 
 # Make With
