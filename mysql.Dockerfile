@@ -1,5 +1,6 @@
-FROM mysql:5.7
+FROM mysql:latest
 
-RUN apt-get update
+COPY ./docker/mysql /docker/mysql/
+COPY ./docker/mysql-entrypoint.sh /docker/
 
 EXPOSE 3306

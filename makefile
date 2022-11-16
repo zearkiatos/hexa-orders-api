@@ -2,7 +2,8 @@ docker-build:
 	docker compose up --build
 
 docker-dev:
-	docker compose -f docker-compose.develop.yml up --build
+	docker compose -f docker-compose.develop.yml up --build -d
+	make docker-dev-mysql
 
 docker-down:
 	docker compose down
@@ -13,3 +14,6 @@ test-env-up:
 
 test-env-down:
 	docker compose -f docker-compose.test.yml down
+
+docker-dev-mysql:
+	docker exec -it mysql sh /docker/mysql-entrypoint.sh

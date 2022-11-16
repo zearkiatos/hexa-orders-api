@@ -19,15 +19,15 @@ CREATE DATABASE IF NOT EXISTS `shopping-cart` /*!40100 DEFAULT CHARACTER SET utf
 USE `shopping-cart`;
 
 -- Volcando estructura para tabla kodoti_wallet.auth_user
-CREATE TABLE IF NOT EXISTS `order` (
+CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_number` varchar(15) NOT NULL,
   `client_id` int(11) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `order_number` (`order_number`)
+  UNIQUE KEY `order_number` (`order_number`),
   CONSTRAINT `fk_client_id` FOREIGN KEY (`client_id`)
-  REFERENCES client(id)  
+  REFERENCES `clients` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
@@ -38,37 +38,37 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_item_id` FOREIGN KEY (`item_id`)
-  REFERENCES item(id) 
+  REFERENCES `items` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla kodoti_wallet.wallet_movement
-CREATE TABLE IF NOT EXISTS `client` (
+CREATE TABLE IF NOT EXISTS `clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
   `id_number` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-  UNIQUE KEY `username` (`username`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
   UNIQUE KEY `id_number` (`id_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla kodoti_wallet.wallet_subscription
-CREATE TABLE IF NOT EXISTS `wallet_subscription` (
+CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `code` varchar(20) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `cron` varchar(50) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `sku` varchar(10) NOT NULL,
+  `barcode` varchar(150) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `item_number` varchar(10) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `item_number` (`item_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
@@ -81,3 +81,23 @@ CREATE TABLE IF NOT EXISTS `wallet_subscription` (
 -- Default user
 -- INSERT INTO `auth_user` (`email`, `password`, `created_at`, `updated_at`) VALUES
 -- 	('caprilespe@outlook.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '2020-07-09 00:36:13', NULL);
+
+INSERT IGNORE INTO clients 
+  (username, name, lastname, id_number) 
+VALUES 
+  ("zearkiatos", "Pedro", "Capriles", "12345678");
+
+INSERT IGNORE INTO items 
+  (sku, barcode, item_number, name, price) 
+VALUES 
+  ("11111", "111111111111", "11111", "Item 1", 200.0);
+
+INSERT IGNORE INTO items 
+  (sku, barcode, item_number, name, price) 
+VALUES 
+  ("22222", "222222222222", "22222", "Item 2", 100.0);
+
+INSERT IGNORE INTO items 
+  (sku, barcode, item_number, name, price) 
+VALUES
+   ("33333", "333333333333", "33333","Item 3", 125.25);

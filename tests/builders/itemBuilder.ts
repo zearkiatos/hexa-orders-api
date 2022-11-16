@@ -6,6 +6,7 @@ class ItemBuilder extends BaseBuilder {
   private barcode: string;
   private itemNumber: string;
   private price: number;
+  private name: string;
   constructor() {
     super();
     this.id = "1";
@@ -13,6 +14,7 @@ class ItemBuilder extends BaseBuilder {
     this.barcode = "1";
     this.itemNumber = "1";
     this.price = 200;
+    this.name = "Shoes";
   }
 }
 

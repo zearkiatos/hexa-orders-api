@@ -17,7 +17,7 @@ class MongoOrderDTO {
         },
         orderDetails: orderDetails.map((orderDetail) => {
           const { id: orderDetailId, item, quantity, subtotal } = orderDetail;
-          const { id: itemId, sku, barcode, itemNumber, price } = item;
+          const { id: itemId, sku, barcode, itemNumber, price, name } = item;
 
           return {
             id: orderDetailId,
@@ -27,6 +27,7 @@ class MongoOrderDTO {
               barcode,
               itemNumber,
               price,
+              name
             },
             quantity,
             subtotal,
@@ -53,7 +54,7 @@ class MongoOrderDTO {
       },
       orderDetails: orderDetails.map((orderDetail) => {
         const { id: orderDetailId, item, quantity, subtotal } = orderDetail;
-        const { id: itemId, sku, barcode, itemNumber, price } = item;
+        const { id: itemId, sku, barcode, itemNumber, price, name } = item;
 
         return {
           id: orderDetailId,
@@ -63,6 +64,7 @@ class MongoOrderDTO {
             barcode,
             itemNumber,
             price,
+            name
           },
           quantity,
           subtotal,
