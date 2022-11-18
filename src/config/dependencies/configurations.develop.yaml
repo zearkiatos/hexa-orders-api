@@ -13,4 +13,4 @@ config:
     - name: Order
       instance: '../Contexts/Order/application/order'
     - name: Database
-      instance: '../Contexts/Database/infrastructure/MongoDatabase'
+      instance: '../Contexts/Database/infrastructure/MySQLDatabase'

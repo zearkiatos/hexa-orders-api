@@ -37,10 +37,13 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_item_id` FOREIGN KEY (`item_id`)
-  REFERENCES `items` (`id`)
+  REFERENCES `items` (`id`),
+  CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`)
+  REFERENCES `orders` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- La exportación de datos fue deseleccionada.
@@ -101,3 +104,13 @@ INSERT IGNORE INTO items
   (sku, barcode, item_number, name, price) 
 VALUES
    ("33333", "333333333333", "33333","Item 3", 125.25);
+
+INSERT IGNORE INTO orders 
+  (order_number, client_id, total) 
+VALUES
+   ("000000000000001", 1, 400.0);
+
+INSERT IGNORE INTO order_details 
+  (item_id, quantity, subtotal, order_id) 
+VALUES
+   ("11111", 2, 400.0, 1);

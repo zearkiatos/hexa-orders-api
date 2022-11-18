@@ -8,7 +8,7 @@ export default {
   MONGO_DATABASE_URI: process.env.MONGO_DATABASE_URI,
   MY_SQL_DTABASE: {
     HOST: process.env.MYSQL_HOST,
-    PORT: process.env.MYSQL_PORT,
+    PORT: parseInt(process.env.MYSQL_PORT || "3306", 10),
     USER: process.env.MYSQL_USER,
     PASSWORD: process.env.MYSQL_PASSWORD,
     DATABASE: process.env.MYSQL_DATABASE,
