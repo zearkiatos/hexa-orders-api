@@ -32,6 +32,7 @@ const Items: mongoose.Schema = new mongoose.Schema({
     unique: true,
   },
   price: Number,
+  name: String,
 });
 
 const OrderDetails: mongoose.Schema = new mongoose.Schema({
