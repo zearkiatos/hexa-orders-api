@@ -6,7 +6,7 @@ export default {
   METRICS_PREFIX: process.env.METRICS_PREFIX,
   NAME: process.env.NAME,
   MONGO_DATABASE_URI: process.env.MONGO_DATABASE_URI,
-  MY_SQL_DTABASE: {
+  MY_SQL_DATABASE: {
     HOST: process.env.MYSQL_HOST,
     PORT: parseInt(process.env.MYSQL_PORT || "3306", 10),
     USER: process.env.MYSQL_USER,

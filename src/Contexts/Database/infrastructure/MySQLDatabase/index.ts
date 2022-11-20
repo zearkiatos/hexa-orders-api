@@ -3,6 +3,7 @@ import config from "@Config/index";
 import Database from "@Database/infrastructure/Database";
 import DatabaseErrorHandler from "@Api/Errors/DatabaseErrorHandler";
 import { Logger } from "@Api/utils/logger";
+import DataContext from "@Shared/infrastructure/dataContext";
 const log = Logger(__filename);
 
 class MySQLDatabase implements Database {
@@ -10,13 +11,14 @@ class MySQLDatabase implements Database {
   public async connection(): Promise<void> {
     try {
       this.connectionPool = createPool({
-        host: config.MY_SQL_DTABASE.HOST,
-        user: config.MY_SQL_DTABASE.USER,
-        password: config.MY_SQL_DTABASE.PASSWORD,
-        database: config.MY_SQL_DTABASE.DATABASE,
-        port: config.MY_SQL_DTABASE.PORT,
+        host: config.MY_SQL_DATABASE.HOST,
+        user: config.MY_SQL_DATABASE.USER,
+        password: config.MY_SQL_DATABASE.PASSWORD,
+        database: config.MY_SQL_DATABASE.DATABASE,
+        port: config.MY_SQL_DATABASE.PORT,
         decimalNumbers: true,
       });
+      DataContext.setContext(this.connectionPool);
       log.info("Create connection pool 🐬 🟢");
     } catch (ex: any) {
       log.error("Error in the connection pool", {

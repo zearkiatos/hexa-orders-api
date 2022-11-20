@@ -2,7 +2,6 @@ import MongoOrderRepository from "@Api/Contexts/Order/infrastructure/MongoDB/Mon
 import MongoDatabase from "@Api/Contexts/Database/infrastructure/MongoDatabase";
 import OrderModel from "@Order/infrastructure/MongoDB/Schema/Order";
 import OrderBuilder from "@Builders/orderBuilder";
-import Order from "@Order/domain/Order";
 import RepositoryErrorHandler from "@Api/Errors/RepositoryErrorHandler";
 
 const mongoDatabase = new MongoDatabase();
