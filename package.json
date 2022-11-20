@@ -14,7 +14,7 @@
     "pretest": "make test-env-up",
     "postest": "make test-env-down",
     "test": "jest --config jest.config.js --coverage --forceExit --detectOpenHandles",
-    "test:ci": "make test-env-up && CI=false jest --config jest.config.js --coverage --forceExit --detectOpenHandles && make test-env-down"
+    "test:ci": "CI=false jest --config jest.config.js --coverage --forceExit --detectOpenHandles"
   },
   "repository": {
     "type": "git",

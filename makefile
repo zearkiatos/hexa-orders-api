@@ -11,9 +11,10 @@ docker-down:
 
 test-env-up:
 	docker compose -f docker-compose.test.yml up -d --build
+	make docker-dev-mysql
 
 test-env-down:
 	docker compose -f docker-compose.test.yml down
 
 docker-dev-mysql:
-	docker exec -it mysql sh /docker/mysql-entrypoint.sh
+	docker exec -t mysql sh /docker/mysql-entrypoint.sh -d
