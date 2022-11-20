@@ -4,6 +4,9 @@ import MySQLDatabase from "@Api/Contexts/Database/infrastructure/MySQLDatabase";
 import OrderBuilder from "@Builders/orderBuilder";
 import OrderDetailBuilder from "@Builders/orderDetailBuilder";
 import ItemBuilder from "@Builders/itemBuilder";
+import DataContext from "@Api/Contexts/Shared/infrastructure/dataContext";
+import RepositoryErrorHandler from "@Api/Errors/RepositoryErrorHandler";
+import MySqlOrderDTO from "@Api/Contexts/Order/infrastructure/MySQL/DTO";
 
 const mySqlDatabase = new MySQLDatabase();
 const mySqlOrderRepository = new MySQLOrderRepository();
@@ -14,6 +17,11 @@ describe("Suite integration test for MySQLOrderRepository", () => {
     await mySqlDatabase.connection();
     context = mySqlDatabase.getDatabaseContext();
     await clearMockData();
+  });
+
+  beforeEach(async () => {
+    await clearMockData();
+    jest.restoreAllMocks();
   });
 
   afterAll(async () => {
@@ -53,6 +61,55 @@ describe("Suite integration test for MySQLOrderRepository", () => {
     expect(orders[0].client).toEqual(order.client);
     expect(orders[0].orderNumber).toEqual(order.orderNumber);
     expect(orders[0].total).toEqual(order.total);
+  });
+
+  test("Should get a MySqlOrderRepository handler error when exist some error", async () => {
+    jest.spyOn(DataContext, "getContext").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mySqlOrderRepository.find();
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in MySql Order Repository when try to find the order list: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
+
+  test("Should save an order a save into the mysql database", async () => {
+    const order = new OrderBuilder().build();
+
+    await mySqlOrderRepository.save(order);
+    const [rows]: any[] = await context.execute(`SELECT od.order_id, o.order_number, o.client_id, o.total, od.item_id, od.quantity, od.subtotal, i.sku, i.barcode, i.name, i.item_number, i.price, c.username, c.name, c.lastname, c.id_number, od.id as order_detail_id, i.name as item_name
+    FROM orders as o INNER JOIN order_details as od ON (o.id = od.order_id)
+    INNER JOIN items AS i ON (i.id = od.item_id)
+    INNER JOIN clients AS c ON(c.id = o.client_id) WHERE o.id = ${order.id}`);
+    const orderFound = MySqlOrderDTO.OrderMapper(rows);
+
+    expect(orderFound).toBeDefined();
+    expect(orderFound.id).toEqual(order.id);
+    expect(orderFound.client.name).toEqual(order.client.name);
+    expect(orderFound.orderDetails[0].id).toEqual(order.orderDetails[0].id);
+    expect(orderFound.orderNumber).toEqual(order.orderNumber);
+    expect(orderFound.total).toEqual(order.total);
+  });
+
+  test("Should try to save and MySqlOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    jest.spyOn(DataContext, "getContext").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mySqlOrderRepository.save(order);
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in MySql Order Repository when save an order: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
   });
 });
 

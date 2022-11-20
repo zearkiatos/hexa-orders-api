@@ -16,27 +16,51 @@ class MySQLOrderRepository implements OrderRepository {
       FROM orders as o INNER JOIN order_details as od ON (o.id = od.order_id)
       INNER JOIN items AS i ON (i.id = od.item_id)
       INNER JOIN clients AS c ON(c.id = o.client_id)`);
-      console.log(rows);
       const orders = MySqlOrderDTO.OrdersMapper(rows);
-      // const orders = await OrderModel.find();
-      // return MongoOrderDTO.ordersMapper(orders);
       return orders;
     } catch (ex: any) {
       log.error(
-        "Something was wrong in Mongo Order Repository when try to find the order list",
+        "Something was wrong in MySql Order Repository when try to find the order list",
         {
           errorMessage: ex.message,
           stack: ex.stack,
         }
       );
       throw new RepositoryErrorHandler(
-        `Something was wrong in Mongo Order Repository when try to find the order list: message ${ex.message}`
+        `Something was wrong in MySql Order Repository when try to find the order list: message ${ex.message}`
       );
     }
   }
-  save(order: Order): void {
-    console.log(order);
-    throw new Error("Method not implemented.");
+  public async save(order: Order): Promise<void> {
+    try {
+      const context:Pool = (DataContext.getContext() as Pool);
+      for (const orderDetail of order.orderDetails) {
+        await context.execute(
+          `INSERT INTO items(id, sku, barcode, item_number, price, name) VALUES("${orderDetail.id}", "${orderDetail.item.sku}","${orderDetail.item.barcode}", "${orderDetail.item.itemNumber}", ${orderDetail.item.price}, "${orderDetail.item.name}")`
+        );
+        await context.execute(
+          `INSERT INTO order_details(id, item_id, order_id, quantity, subtotal) VALUES(${parseInt(orderDetail.item.id)}, ${orderDetail.item.id}, 1, ${orderDetail.quantity}, ${orderDetail.subtotal})`
+        );
+      }
+      await context.execute(
+        `INSERT INTO clients(id, username, name, lastname, id_number) VALUES(1, "${order.client?.username}", "${order.client?.name}", "${order.client?.lastname}", "${order.client?.idNumber}")`
+      );
+      await context.execute(
+        `INSERT INTO orders(id, order_number, client_id, total) VALUES(1,"${order.orderNumber}", "${order.client.id}", "${order.total}")`
+      );
+    }
+    catch(ex: any) {
+      log.error(
+        "Something was wrong in MySql Order Repository when save an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in MySql Order Repository when save an order: message ${ex.message}`
+      );
+    }
   }
   update(id: string, order: Order): void {
     console.log(order);
