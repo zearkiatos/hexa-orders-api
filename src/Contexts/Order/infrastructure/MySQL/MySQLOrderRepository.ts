@@ -12,7 +12,7 @@ class MySQLOrderRepository implements OrderRepository {
   public async find(): Promise<Order[]> {
     try {
       const [rows]: any[] = await (DataContext.getContext() as Pool)
-        .execute(`SELECT od.order_id, o.order_number, o.client_id, o.total, od.item_id, od.quantity, od.subtotal, i.sku, i.barcode, i.name, i.item_number, i.price, c.username, c.name, c.lastname, c.id_number, od.id as order_detail_id
+        .execute(`SELECT od.order_id, o.order_number, o.client_id, o.total, od.item_id, od.quantity, od.subtotal, i.sku, i.barcode, i.name, i.item_number, i.price, c.username, c.name, c.lastname, c.id_number, od.id as order_detail_id, i.name as item_name
       FROM orders as o INNER JOIN order_details as od ON (o.id = od.order_id)
       INNER JOIN items AS i ON (i.id = od.item_id)
       INNER JOIN clients AS c ON(c.id = o.client_id)`);

@@ -47,15 +47,12 @@ describe("Suite integration test for MySQLOrderRepository", () => {
 
     const orders = await mySqlOrderRepository.find();
 
-    console.log(orders);
-
     expect(orders).toBeDefined();
-    // expect(orders).toHaveLength(1);
-    // expect(orders[0].id).toEqual(order.id);
-    // expect(orders[0].client).toEqual(order.client);
-    // expect(orders[0].orderDetails[0]).toEqual(order.orderDetails[0]);
-    // expect(orders[0].orderNumber).toEqual(order.orderNumber);
-    // expect(orders[0].total).toEqual(order.total);
+    expect(orders).toHaveLength(1);
+    expect(orders[0].id).toEqual(order.id);
+    expect(orders[0].client).toEqual(order.client);
+    expect(orders[0].orderNumber).toEqual(order.orderNumber);
+    expect(orders[0].total).toEqual(order.total);
   });
 });
 
