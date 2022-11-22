@@ -86,31 +86,31 @@ CREATE TABLE IF NOT EXISTS `items` (
 -- 	('caprilespe@outlook.com', 'jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=', '2020-07-09 00:36:13', NULL);
 
 INSERT IGNORE INTO clients 
-  (username, name, lastname, id_number) 
+  (id, username, name, lastname, id_number) 
 VALUES 
-  ("zearkiatos", "Pedro", "Capriles", "12345678");
+  (1, "zearkiatos", "Pedro", "Capriles", "12345678");
 
 INSERT IGNORE INTO items 
-  (sku, barcode, item_number, name, price) 
+  (id, sku, barcode, item_number, name, price) 
 VALUES 
-  ("11111", "111111111111", "11111", "Item 1", 200.0);
+  (1, "11111", "111111111111", "11111", "Item 1", 200.0);
 
 INSERT IGNORE INTO items 
-  (sku, barcode, item_number, name, price) 
+  (id, sku, barcode, item_number, name, price) 
 VALUES 
-  ("22222", "222222222222", "22222", "Item 2", 100.0);
+  (2, "22222", "222222222222", "22222", "Item 2", 100.0);
 
 INSERT IGNORE INTO items 
-  (sku, barcode, item_number, name, price) 
+  (id, sku, barcode, item_number, name, price) 
 VALUES
-   ("33333", "333333333333", "33333","Item 3", 125.25);
+  (3, "33333", "333333333333", "33333","Item 3", 125.25);
 
 INSERT IGNORE INTO orders 
-  (order_number, client_id, total) 
+  (id, order_number, client_id, total) 
 VALUES
-   ("000000000000001", 1, 400.0);
+   (1, "000000000000001", 1, 400.0);
 
 INSERT IGNORE INTO order_details 
-  (item_id, quantity, subtotal, order_id) 
+  (id, item_id, quantity, subtotal, order_id) 
 VALUES
-   ("11111", 2, 400.0, 1);
+   (1, "11111", 2, 400.0, 1);

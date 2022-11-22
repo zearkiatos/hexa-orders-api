@@ -9,7 +9,7 @@ config:
     - name: NotFound
       instance: '../Contexts/NotFound/application/notFound'
     - name: OrderRepository
-      instance: '../Contexts/Order/infrastructure/MongoDB/MongoOrderRepository'
+      instance: '../Contexts/Order/infrastructure/MySQL/MySQLOrderRepository'
       args:
         - 'context'
     - name: Order

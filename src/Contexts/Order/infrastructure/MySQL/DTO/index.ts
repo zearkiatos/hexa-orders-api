@@ -31,6 +31,7 @@ class MySqlOrderDTO {
             itemNumber: currentValue.item_number,
             price: currentValue.price,
           },
+          subtotal: currentValue.subtotal
         });
       } else {
         accumulatorUpdated.push({
@@ -46,6 +47,7 @@ class MySqlOrderDTO {
                 itemNumber: currentValue.item_number,
                 price: currentValue.price,
               },
+              subtotal: currentValue.subtotal
             },
           ],
         });
@@ -84,6 +86,7 @@ class MySqlOrderDTO {
             itemNumber: currentValue.item_number,
             price: currentValue.price,
           },
+          subtotal: currentValue.subtotal
         });
       } else {
         accumulatorUpdated = {
@@ -99,6 +102,7 @@ class MySqlOrderDTO {
                 itemNumber: currentValue.item_number,
                 price: currentValue.price,
               },
+              subtotal: currentValue.subtotal
             },
           ],
         };
