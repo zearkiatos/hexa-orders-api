@@ -2,7 +2,7 @@ docker-build:
 	docker compose up --build
 
 docker-dev:
-	docker compose -f docker-compose.develop.yml up --build
+	docker compose -f docker-compose.develop.yml up --build -d
 	make docker-dev-mysql
 
 docker-down:
@@ -10,7 +10,7 @@ docker-down:
 	docker compose -f docker-compose.develop.yml down
 
 test-env-up:
-	docker compose -f docker-compose.test.yml up -d --build
+	docker compose -f docker-compose.test.yml up --build -d
 	make docker-dev-mysql
 
 test-env-down:

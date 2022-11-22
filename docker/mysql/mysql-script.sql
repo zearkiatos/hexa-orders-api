@@ -113,4 +113,4 @@ VALUES
 INSERT IGNORE INTO order_details 
   (id, item_id, quantity, subtotal, order_id) 
 VALUES
-   (1, "11111", 2, 400.0, 1);
+   (1, 1, 2, 400.0, 1);
