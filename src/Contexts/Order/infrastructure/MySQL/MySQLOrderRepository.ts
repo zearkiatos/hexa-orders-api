@@ -33,23 +33,20 @@ class MySQLOrderRepository implements OrderRepository {
   }
   public async save(order: Order): Promise<void> {
     try {
-      const context:Pool = (DataContext.getContext() as Pool);
+      const context: Pool = DataContext.getContext() as Pool;
+      await context.execute(
+        `INSERT INTO orders(order_number, client_id, total) VALUES("${order.orderNumber}", "${order.client.id}", "${order.total}")`
+      );
+
+      const [rows]: any[] = await context.execute(
+        `SELECT o.id FROM orders AS o WHERE o.order_number = "${order.orderNumber}"`
+      );
       for (const orderDetail of order.orderDetails) {
         await context.execute(
-          `INSERT INTO items(id, sku, barcode, item_number, price, name) VALUES("${orderDetail.id}", "${orderDetail.item.sku}","${orderDetail.item.barcode}", "${orderDetail.item.itemNumber}", ${orderDetail.item.price}, "${orderDetail.item.name}")`
-        );
-        await context.execute(
-          `INSERT INTO order_details(id, item_id, order_id, quantity, subtotal) VALUES(${parseInt(orderDetail.item.id)}, ${orderDetail.item.id}, 1, ${orderDetail.quantity}, ${orderDetail.subtotal})`
+          `INSERT INTO order_details(item_id, order_id, quantity, subtotal) VALUES(${orderDetail.item.id}, ${rows[0].id}, ${orderDetail.quantity}, ${orderDetail.subtotal})`
         );
       }
-      await context.execute(
-        `INSERT INTO clients(id, username, name, lastname, id_number) VALUES(1, "${order.client?.username}", "${order.client?.name}", "${order.client?.lastname}", "${order.client?.idNumber}")`
-      );
-      await context.execute(
-        `INSERT INTO orders(id, order_number, client_id, total) VALUES(1,"${order.orderNumber}", "${order.client.id}", "${order.total}")`
-      );
-    }
-    catch(ex: any) {
+    } catch (ex: any) {
       log.error(
         "Something was wrong in MySql Order Repository when save an order",
         {
@@ -62,10 +59,36 @@ class MySQLOrderRepository implements OrderRepository {
       );
     }
   }
-  update(id: string, order: Order): void {
-    console.log(order);
-    console.log(id);
-    throw new Error("Method not implemented.");
+  public async update(id: string, order: Order): Promise<void> {
+    try {
+      const context: Pool = DataContext.getContext() as Pool;
+      await context.execute(
+        `UPDATE orders SET order_number="${
+          order.orderNumber
+        }", client_id=${parseInt(order.client.id)}, total=${
+          order.total
+        } WHERE id=${parseInt(id)}`
+      );
+      for (const orderDetail of order.orderDetails)
+        await context.execute(
+          `UPDATE order_details SET item_id=${parseInt(
+            orderDetail.item.id
+          )}, quantity=${orderDetail.quantity}, subtotal=${
+            orderDetail.subtotal
+          } WHERE order_id=${id}`
+        );
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in MySql Order Repository when try to update an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in MySql Order Repository when try to update an order: message ${ex.message}`
+      );
+    }
   }
   delete(id: string): void {
     console.log(id);

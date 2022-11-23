@@ -10,7 +10,7 @@ docker-down:
 	docker compose -f docker-compose.develop.yml down
 
 test-env-up:
-	docker compose -f docker-compose.test.yml up -d --build
+	docker compose -f docker-compose.test.yml up --build -d
 	make docker-dev-mysql
 
 test-env-down:
