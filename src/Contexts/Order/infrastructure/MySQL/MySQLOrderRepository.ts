@@ -90,9 +90,28 @@ class MySQLOrderRepository implements OrderRepository {
       );
     }
   }
-  delete(id: string): void {
-    console.log(id);
-    throw new Error("Method not implemented.");
+  public async delete(id: string): Promise<void> {
+    try {
+      const context: Pool = DataContext.getContext() as Pool;
+      await context.execute(
+        `DELETE FROM order_details WHERE order_id=${parseInt(id)}`
+      );
+
+      await context.execute(
+        `DELETE FROM orders WHERE id=${parseInt(id)}`
+      );
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in MySql Order Repository when try to delete an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in MySql Order Repository when try to delete an order: message ${ex.message}`
+      );
+    }
   }
   findByOrderNumber(orderNumber: string): Promise<Order> {
     console.log(orderNumber);

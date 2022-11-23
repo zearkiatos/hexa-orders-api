@@ -117,7 +117,7 @@ describe("Suite integration test for MySQLOrderRepository", () => {
     }
   });
 
-  test("Should update an order an existed into the mysql database", async () => {
+  test("Should update an order that existed into the mysql database", async () => {
     const order = new OrderBuilder()
       .withParam("orderDetails", [
         new OrderDetailBuilder().build(),
@@ -161,6 +161,53 @@ describe("Suite integration test for MySQLOrderRepository", () => {
     } catch (ex: any) {
       expect(ex.message).toBe(
         "Something was wrong in MySql Order Repository when try to update an order: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
+
+  test("Should delete an order that existed into the mysql database", async () => {
+    const order = new OrderBuilder()
+      .withParam("orderDetails", [
+        new OrderDetailBuilder().build(),
+        new OrderDetailBuilder()
+          .withParam("id", 2)
+          .withParam(
+            "item",
+            new ItemBuilder()
+              .withParam("id", 2)
+              .withParam("sku", "2")
+              .withParam("barcode", "2")
+              .withParam("itemNumber", "2")
+              .withParam("price", 100)
+              .withParam("name", "Shirt")
+              .build()
+          )
+          .withParam("quantity", 1)
+          .build(),
+      ])
+      .build();
+    await loadMockData(order);
+
+    await mySqlOrderRepository.delete("1");
+    const [rows]:any[] = await context.execute("SELECT order_number FROM orders WHERE id=1");
+
+    expect(rows).toBeDefined();
+    expect(rows).toHaveLength(0);
+  });
+
+  test("Should try to delete and MySQLOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    await loadMockData(order);
+    jest.spyOn(DataContext, "getContext").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mySqlOrderRepository.delete("1");
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in MySql Order Repository when try to delete an order: message Something was wrong 🤯"
       );
       expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
     }
