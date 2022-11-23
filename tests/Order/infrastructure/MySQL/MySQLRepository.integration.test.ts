@@ -116,6 +116,55 @@ describe("Suite integration test for MySQLOrderRepository", () => {
       expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
     }
   });
+
+  test("Should update an order an existed into the mysql database", async () => {
+    const order = new OrderBuilder()
+      .withParam("orderDetails", [
+        new OrderDetailBuilder().build(),
+        new OrderDetailBuilder()
+          .withParam("id", 2)
+          .withParam(
+            "item",
+            new ItemBuilder()
+              .withParam("id", 2)
+              .withParam("sku", "2")
+              .withParam("barcode", "2")
+              .withParam("itemNumber", "2")
+              .withParam("price", 100)
+              .withParam("name", "Shirt")
+              .build()
+          )
+          .withParam("quantity", 1)
+          .build(),
+      ])
+      .build();
+    await loadMockData(order);
+    order.orderNumber = "00001";
+
+    await mySqlOrderRepository.update("1",order);
+    const [rows]:any[] = await context.execute("SELECT order_number FROM orders WHERE id=1");
+    const orderFound = MySqlOrderDTO.OrderMapper(rows);
+
+    expect(orderFound).toBeDefined();
+    expect(orderFound.orderNumber).toBe(order.orderNumber);
+  });
+
+  test("Should try to update and MySQLOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    await loadMockData(order);
+    jest.spyOn(DataContext, "getContext").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mySqlOrderRepository.update("1", order);
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in MySql Order Repository when try to update an order: message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
 });
 
 const loadMockData = async (order: any) => {

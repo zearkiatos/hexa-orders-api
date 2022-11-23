@@ -40,8 +40,10 @@ services:
       - "3001:3000"
     depends_on: 
       - mongodb
+      - mysqldb
     links:
       - mongodb
+      - mysqldb
     networks:
       developmentnetwork:
 networks:
