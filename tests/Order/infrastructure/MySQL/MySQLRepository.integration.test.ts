@@ -212,6 +212,55 @@ describe("Suite integration test for MySQLOrderRepository", () => {
       expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
     }
   });
+
+  test("Should get a order by orderNumber into the mysql database", async () => {
+    const order = new OrderBuilder()
+      .withParam("orderDetails", [
+        new OrderDetailBuilder().build(),
+        new OrderDetailBuilder()
+          .withParam("id", 2)
+          .withParam(
+            "item",
+            new ItemBuilder()
+              .withParam("id", 2)
+              .withParam("sku", "2")
+              .withParam("barcode", "2")
+              .withParam("itemNumber", "2")
+              .withParam("price", 100)
+              .withParam("name", "Shirt")
+              .build()
+          )
+          .withParam("quantity", 1)
+          .build(),
+      ])
+      .build();
+    await loadMockData(order);
+
+    const orderFound = await mySqlOrderRepository.findByOrderNumber("1");
+
+    expect(orderFound).toBeDefined();
+    expect(orderFound.id).toEqual(order.id);
+    expect(orderFound.client.name).toEqual(order.client.name);
+    expect(orderFound.orderDetails[0].id).toEqual(order.orderDetails[0].id);
+    expect(orderFound.orderNumber).toEqual(order.orderNumber);
+  });
+
+  test("Should try to find an orderby orderNumber and MySQLOrderRepository handler error when exist some error", async () => {
+    const order = new OrderBuilder().build();
+    await loadMockData(order);
+    jest.spyOn(DataContext, "getContext").mockImplementation(() => {
+      throw new Error("Something was wrong 🤯");
+    });
+
+    try {
+      await mySqlOrderRepository.findByOrderNumber("1");
+    } catch (ex: any) {
+      expect(ex.message).toBe(
+        "Something was wrong in MySql Order Repository when try to find an order by orderNumber message Something was wrong 🤯"
+      );
+      expect(ex instanceof RepositoryErrorHandler).toBeTruthy();
+    }
+  });
 });
 
 const loadMockData = async (order: any) => {

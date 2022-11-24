@@ -97,9 +97,7 @@ class MySQLOrderRepository implements OrderRepository {
         `DELETE FROM order_details WHERE order_id=${parseInt(id)}`
       );
 
-      await context.execute(
-        `DELETE FROM orders WHERE id=${parseInt(id)}`
-      );
+      await context.execute(`DELETE FROM orders WHERE id=${parseInt(id)}`);
     } catch (ex: any) {
       log.error(
         "Something was wrong in MySql Order Repository when try to delete an order",
@@ -113,9 +111,31 @@ class MySQLOrderRepository implements OrderRepository {
       );
     }
   }
-  findByOrderNumber(orderNumber: string): Promise<Order> {
-    console.log(orderNumber);
-    throw new Error("Method not implemented.");
+  public async findByOrderNumber(orderNumber: string): Promise<Order> {
+    try {
+      const context: Pool = DataContext.getContext() as Pool;
+      const [rows]: any[] = await context.execute(
+        `SELECT od.order_id, o.order_number, o.client_id, o.total, od.item_id, od.quantity, od.subtotal, i.sku, i.barcode, i.name, i.item_number, i.price, c.username, c.name, c.lastname, c.id_number, od.id as order_detail_id, i.name as item_name
+      FROM orders as o INNER JOIN order_details as od ON (o.id = od.order_id)
+      INNER JOIN items AS i ON (i.id = od.item_id)
+      INNER JOIN clients AS c ON(c.id = o.client_id) WHERE o.order_number = ${orderNumber}`
+      );
+
+      const orderFound: Order = MySqlOrderDTO.OrderMapper(rows);
+
+      return orderFound;
+    } catch (ex: any) {
+      log.error(
+        "Something was wrong in MySql Order Repository when try to find an order by orderNumber an order",
+        {
+          errorMessage: ex.message,
+          stack: ex.stack,
+        }
+      );
+      throw new RepositoryErrorHandler(
+        `Something was wrong in MySql Order Repository when try to find an order by orderNumber message ${ex.message}`
+      );
+    }
   }
 }
 
