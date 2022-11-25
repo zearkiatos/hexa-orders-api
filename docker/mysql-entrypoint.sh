@@ -1,0 +1,1 @@
+mysql --port 3306 -u admin shopping-cart  -p${MYSQL_PASSWORD} </docker/mysql/mysql-script.sql

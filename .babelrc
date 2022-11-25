@@ -1,0 +1,30 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./dist"],
+        "alias": {
+          "@Api": "./dist/",
+          "@Config": "./dist/config",
+          "@Utils": "./dist/utils",
+          "@Shared": "./dist/Contexts/Shared",
+          "@Server": ["./dist/Contexts/Server"],
+          "@Order": ["./dist/Contexts/Order"],
+          "@Database": ["./dist/Contexts/Database"]
+        }
+      }
+    ]
+  ]
+}

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  mysqldb:
+      env_file:
+        - mysql.env
+      build:
+        context: .
+        dockerfile: mysql.Dockerfile
+      container_name: mysql
+      volumes:
+        - ./data/mysqldb:/data/mysqldb
+      ports:
+        - "3307:3306"
+      networks:
+        developmentnetwork:
+  mongodb:
+    env_file:
+      - mongo.env
+    build:
+      context: .
+      dockerfile: mongo.Dockerfile
+    container_name: mongo
+    volumes:
+      - ./data/mongodb:/data/mongodb
+    ports:
+      - "27018:27017"
+    networks:
+      developmentnetwork:
+  api:
+    build:
+      context: .
+      dockerfile: develop.Dockerfile
+    container_name: hexa-shopping-cart-orders-api
+    env_file:
+      - .env.dev
+    volumes: 
+      - ".:/usr/src/app"
+    ports:
+      - "3001:3000"
+    depends_on: 
+      - mongodb
+      - mysqldb
+    links:
+      - mongodb
+      - mysqldb
+    networks:
+      developmentnetwork:
+networks:
+  developmentnetwork:
+    driver: bridge

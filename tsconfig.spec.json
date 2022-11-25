@@ -1,0 +1,31 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+      "baseUrl": "./",
+      "rootDir": "./",
+      "esModuleInterop": true,
+      "module": "commonjs",
+      "target": "ES6",
+      "paths": {
+        "@Api/*": ["./src/*"],
+        "@Config": ["./src/config/env"],
+        "@Config/*": ["./src/config/*"],
+        "@Utils/*": ["./src/utils/*"],
+        "@Shared/*": ["./src/Contexts/Shared/*"],
+        "@Server/*": ["./src/Contexts/Server/*"],
+        "@Order/*": ["./src/Contexts/Order/*"],
+        "@Database/*": ["./src/Contexts/Database/*"],
+        "@Builders/*": ["./tests/builders/*"],
+        "@Mocks/*": ["./tests/__mocks__/*"]
+      }
+    },
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage"
+    ],
+    "include": [
+      "src/**/*",
+      "tests/**/*"
+    ]
+}

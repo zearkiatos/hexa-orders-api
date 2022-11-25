@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.base.json",
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage",
+      "tests/**/*"
+    ],
+    "include": [
+      "src" 
+    ],
+    "ts-node": {
+      "require": ["tsconfig-paths/register"]
+    }
+  }

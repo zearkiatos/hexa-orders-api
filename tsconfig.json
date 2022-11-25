@@ -1,0 +1,29 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+      "baseUrl": "./",
+      "rootDir": "./",
+      "paths": {
+        "@Api/*": ["./src/*"],
+        "@Config": ["./src/config/env"],
+        "@Config/*": ["./src/config/*"],
+        "@Utils/*": ["./src/utils/*"],
+        "@Shared/*": ["./src/Contexts/Shared/*"],
+        "@Server/*": ["./src/Contexts/Server/*"],
+        "@Order/*": ["./src/Contexts/Order/*"],
+        "@Database/*": ["./src/Contexts/Database/*"],
+        "@Builders/*": ["./tests/builders/*"],
+        "@Mocks/*": ["./tests/__mocks__/*"]
+      }
+    },
+    "lib": ["es2021"],
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage"
+    ],
+    "include": [
+      "src",
+      "tests"
+    ],
+  }

@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2021",
+    "module": "commonjs",
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": true,
+    "strictNullChecks": false,
+    "strict": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "lib": ["es2021"],
+    "paths": {
+      "@Api/*": ["./src/*"],
+      "@Config": ["./src/config/env"],
+      "@Config/*": ["./src/config/*"],
+      "@Utils/*": ["./src/utils/*"],
+      "@Shared/*": ["./src/Contexts/Shared/*"],
+      "@Server/*": ["./src/Contexts/Server/*"],
+      "@Order/*": ["./src/Contexts/Order/*"],
+      "@Database/*": ["./src/Contexts/Database/*"],
+      "@Builders/*": ["./tests/builders/*"],
+      "@Mocks/*": ["./tests/__mocks__/*"]
+    }
+  }
+}
