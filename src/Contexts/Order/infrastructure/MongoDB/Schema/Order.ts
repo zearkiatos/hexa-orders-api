@@ -2,34 +2,28 @@ import mongoose from "mongoose";
 
 const Client: mongoose.Schema = new mongoose.Schema({
   username: {
-    unique: true,
     type: String,
   },
   id: {
-    unique: true,
     type: String,
   },
   name: String,
   lastname: String,
   idNumber: {
-    unique: true,
     type: String,
   },
 });
 
 const Items: mongoose.Schema = new mongoose.Schema({
   id: {
-    unique: true,
     type: String,
   },
   sku: String,
   barcode: {
     type: String,
-    unique: true,
   },
   itemNumber: {
     type: String,
-    unique: true,
   },
   price: Number,
   name: String,
@@ -37,7 +31,6 @@ const Items: mongoose.Schema = new mongoose.Schema({
 
 const OrderDetails: mongoose.Schema = new mongoose.Schema({
   id: {
-    unique: true,
     type: String,
   },
   item: Items,
@@ -49,8 +42,7 @@ const Orders = mongoose.model(
   "Order",
   new mongoose.Schema({
     id: {
-      unique: true,
-      type: String,
+      type: String
     },
     orderNumber: {
       unique: true,
