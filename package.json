@@ -1,6 +1,6 @@
 {
   "name": "hexa-shopping-cart-orders-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This is a microservice in TypeScript 🟦 for practice and understand hexagonal architecture ⬣, domain driven design, the best practice of software development in TypeScript. This project simulate a orders microservice to managment orders from an ecommerce 🛒",
   "main": "index.js",
   "scripts": {
