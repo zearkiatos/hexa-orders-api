@@ -64,7 +64,7 @@ class MongoOrderRepository implements OrderRepository {
   }
   public async delete(id: string): Promise<void> {
     try {
-      await OrderModel.deleteOne({ id });
+      await OrderModel.deleteOne({ orderNumber: id });
     } catch (ex: any) {
       log.error(
         "Something was wrong in Mongo Order Repository when try to delete",
